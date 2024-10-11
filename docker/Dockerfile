@@ -5,7 +5,7 @@ EXPOSE 8081/tcp
 ENV FLASK_PORT=8081
 
 # Set the working directory in the container
-WORKDIR /
+WORKDIR /app
 
 # Copy the content of the local src directory to the working directory
 COPY . .
