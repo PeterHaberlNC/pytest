@@ -19,4 +19,4 @@ RUN \
   fi
 
 # Specify the command to run on container start
-CMD [ "python", "./app.py" ]
+CMD [ "python", "./aliyun_kafka_consumer.py" ]
