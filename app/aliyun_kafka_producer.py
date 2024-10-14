@@ -32,7 +32,7 @@ producer = KafkaProducer(bootstrap_servers=conf['bootstrap_servers'],
                          sasl_plain_password=conf['sasl_plain_password'])
 
 partitions = producer.partitions_for(conf['topic_name'])
-print('Topic下分区: %s' % partitions)
+print('Topic: %s' % partitions)
 try:
     future = producer.send(conf['topic_name'], 'hello aliyun-kafka!'.encode())
     future.get()
