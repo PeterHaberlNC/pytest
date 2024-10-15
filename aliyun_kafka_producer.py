@@ -5,6 +5,11 @@ import ssl
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
 import setting
+import datetime
+import socket
+import json
+
+
 
 conf = setting.kafka_setting
 
@@ -33,8 +38,20 @@ producer = KafkaProducer(bootstrap_servers=conf['bootstrap_servers'],
 
 partitions = producer.partitions_for(conf['topic_name'])
 print('Topic: %s' % partitions)
+
+payload = input("Input payload: ")
+timestamp = datetime.datetime.now().isoformat()
+local_ip = socket.gethostbyname(socket.gethostname())
+
+data = {
+    "timestamp": timestamp,
+    "local IP": local_ip,
+    "payload": payload
+}
+json_data = json.dumps(data)
+
 try:
-    future = producer.send(conf['topic_name'], 'hello aliyun-kafka!'.encode())
+    future = producer.send(conf['topic_name'], json_data.encode())
     future.get()
     print('send message succeed.')
 except KafkaError:
