@@ -1,7 +1,19 @@
+import os
+bootstrap_servers = os.getenv('bootstrap_servers', '')
+print(f"servers: {bootstrap_servers}")
+topic_name = os.getenv('topic_name', '')
+print(f"topic_name: {topic_name}")
+consumer_group = os.getenv('consumer_group', '')
+print(f"consumer_group: {consumer_group}")
+username = os.getenv('username', '')
+print(f"sasl_plain_username: {username}")
+password = os.getenv('password', '')
+print(f"sasl_plain_password: {password}")
+
 kafka_setting = {
-    'sasl_plain_username': 'alikafka_post_public_intl-sg-hjb3yitj109',
-    'sasl_plain_password': 'aMsSuyMoIqdpmzfdrP2wd0yDFhDkv4Pd',
-    'bootstrap_servers': ["alikafka-post-public-intl-sg-hjb3yitj109-1.alikafka.aliyuncs.com:9093","alikafka-post-public-intl-sg-hjb3yitj109-2.alikafka.aliyuncs.com:9093","alikafka-post-public-intl-sg-hjb3yitj109-3.alikafka.aliyuncs.com:9093"],
-    'topic_name': 'kafka-vwpoc-topic',
-    'consumer_id': 'Consumer1'
+    'sasl_plain_username': username,
+    'sasl_plain_password': password,
+    'bootstrap_servers': [bootstrap_servers],
+    'topic_name': topic_name,
+    'consumer_id': consumer_group
 }
