@@ -7,6 +7,7 @@ import setting
 import six
 
 conf = setting.kafka_setting
+print("conf:", conf)
 
 context = ssl.create_default_context()
 context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
