@@ -8,8 +8,14 @@ import setting
 import datetime
 import socket
 import json
+import argparse
 
+# Erstelle einen Argumentparser
+parser = argparse.ArgumentParser(description='Zahlenparameter von der Kommandozeile lesen und ausgeben.')
+parser.add_argument('number', type=int, help='Eine ganze Zahl, die von der Kommandozeile gelesen wird')
 
+# Lese die Argumente von der Kommandozeile
+args = parser.parse_args()
 
 conf = setting.kafka_setting
 
@@ -39,21 +45,25 @@ producer = KafkaProducer(bootstrap_servers=conf['bootstrap_servers'],
 partitions = producer.partitions_for(conf['topic_name'])
 print('Topic: %s' % partitions)
 
-payload = input("Input payload: ")
-timestamp = datetime.datetime.now().isoformat()
-local_ip = socket.gethostbyname(socket.gethostname())
+for i in range(args.number):
+#    print(f'Das ist Ausgabe Nummer {i + 1}')
 
-data = {
-    "timestamp": timestamp,
-    "local IP": local_ip,
-    "payload": payload
-}
-json_data = json.dumps(data)
+#    payload = input("Input payload: ")
+    payload = f"data {i + 1}"
+    timestamp = datetime.datetime.now().isoformat()
+    local_ip = socket.gethostbyname(socket.gethostname())
 
-try:
-    future = producer.send(conf['topic_name'], json_data.encode())
-    future.get()
-    print('send message succeed.')
-except KafkaError:
-    print('send message failed.')
-    print(KafkaError)
+    data = {
+        "timestamp": timestamp,
+        "local IP": local_ip,
+        "payload": payload
+    }
+    json_data = json.dumps(data)
+    
+    try:
+        future = producer.send(conf['topic_name'], json_data.encode())
+        future.get()
+        print('send message succeed.')
+    except KafkaError:
+        print('send message failed.')
+        print(KafkaError)
