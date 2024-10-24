@@ -11,11 +11,13 @@ import json
 import argparse
 
 # Erstelle einen Argumentparser
-parser = argparse.ArgumentParser(description='Zahlenparameter von der Kommandozeile lesen und ausgeben.')
-parser.add_argument('number', type=int, help='Eine ganze Zahl, die von der Kommandozeile gelesen wird')
+parser = argparse.ArgumentParser(description='Anzahl messages und payload')
+parser.add_argument('number', type=int, help='Iterations')
+parser.add_argument('text', type=str, help='Payload')
 
 # Lese die Argumente von der Kommandozeile
 args = parser.parse_args()
+spayload = args.text
 
 conf = setting.kafka_setting
 
@@ -49,7 +51,7 @@ for i in range(args.number):
 #    print(f'Das ist Ausgabe Nummer {i + 1}')
 
 #    payload = input("Input payload: ")
-    payload = f"data {i + 1}"
+    payload = f"{spayload}: {i + 1}"
     timestamp = datetime.datetime.now().isoformat()
     local_ip = socket.gethostbyname(socket.gethostname())
 
